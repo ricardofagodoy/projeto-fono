@@ -1,0 +1,9 @@
+{
+    "name": "projeto-fono",
+    "version": "0.0.1",
+    "description": "Prototipo para Fonoaudiologia da PUC.",
+    "dependencies": {
+        "express": "~4.10.1",
+        "mongojs" "~0.17"
+    }
+}
