@@ -3,7 +3,8 @@
     "version": "0.0.1",
     "description": "Prototipo para Fonoaudiologia da PUC.",
     "dependencies": {
-        "express": "~4.10.1",
-        "mongojs" "~0.17"
+        "express": "3.0.0",
+	"ejs": "*",
+	"mongojs": "~0.17.0"
     }
 }
