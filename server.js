@@ -10,6 +10,8 @@ var app = express();
 
 app.set('title', appProperties.name);
 app.set('port', appProperties.port);
+app.set('imagesDirectory', appProperties.imagesDirectory);
+app.set('soundsDirectory', appProperties.soundsDirectory);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
