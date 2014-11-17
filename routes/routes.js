@@ -18,8 +18,17 @@ module.exports = function(app) {
     /* Images routings */
     app.get('/images', imagesModule.imagesManagerPage);
     
-    app.post('/images', imagesModule.uploadImage);
+    app.post('/images/upload', imagesModule.uploadImage);
     app.get('/images/get/:id', imagesModule.getImage);
+    app.get('/images/all/:page', imagesModule.allImages);
+    
+    soundsModule = soundsModule(app);
+    
+    /* Images routings */
+    app.get('/sounds', soundsModule.soundsManagerPage);
+    
+    app.post('/sounds', soundsModule.uploadSound);
+    app.get('/sounds/get/:id', soundsModule.getSound);
     
     return app.router;    
 };

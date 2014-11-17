@@ -1,0 +1,26 @@
+.menu-buttons{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    height: 6%;
+    background-color: #F0F0F0;
+}
+
+.myContent {
+    position: relative;
+    top: 10px;   
+}
+
+.imagesTumb {
+    border: 1px solid #F0F0F0;
+}
+
+.pagination-current {
+    background-color: #dddddd;
+}

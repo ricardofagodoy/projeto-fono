@@ -12,8 +12,10 @@ var app = express();
 app.set('title', appProperties.name);
 app.set('port', appProperties.port);
 app.set('imagesDirectory', appProperties.imagesDirectory);
+app.set('imagesPerPage', appProperties.imagesPerPage);
+app.set('soundsPerPage', appProperties.soundsPerPage);
 app.set('soundsDirectory', appProperties.soundsDirectory);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/views/templates');
 app.set('view engine', 'ejs');
 
 app.use(express.logger('dev'));
@@ -28,6 +30,9 @@ app.use(function(req, res, next) {
     req.session.messages = {};
     next();
 });
+
+app.use("/css", express.static(__dirname + '/views/css'));
+app.use("/js", express.static(__dirname + '/views/js'));
 
 /* Set Routes to app */
 app.use(routes(app));

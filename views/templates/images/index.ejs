@@ -1,0 +1,72 @@
+<% include ../includes/header %>
+   
+    <div ng-app="imagesManager" ng-controller="imagesCtrl" class="container-fluid myContent">
+        <div class="col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-3">
+            
+        <%if(typeof(success) !== 'undefined') { %>
+            <div class="alert alert-success alert-dismissible">
+                 <button type="button" class="close" data-dismiss="alert">
+                     <span aria-hidden="true">&times;</span>
+                     <span class="sr-only">Close</span>
+                </button>
+                
+                Foto <%= success%> inserida com sucesso!</div>
+        <% } %>
+            
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                  <h3 class="panel-title">Gerenciador de imagens</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <p>Imagens no repositório:</p>
+
+                    <div class="col-12 imagesTumb">
+
+                        <img ng-repeat="img in images"
+                             class="thumbnail"
+                             src="images/get/{{img._id}}" 
+                             data-holder-rendered="true"
+                             style="width: 108px; height: 108px; display: inline-block; margin: 5px;">
+                    </div>
+
+                    <nav>
+                      <ul class="pagination" style="margin-bottom: 0">
+                        <li ng-click="prevPage()"><span aria-hidden="true">&laquo;</span></li>
+                        <li class="active"><a href="#">{{page}}</a></li>
+                        <li><a href="#">...</a></li>
+                        <li><a href="#">{{totalPages}}</a></li>
+                        <li ng-click="nextPage()"><span aria-hidden="true">&raquo;</span></li>
+                      </ul>
+                    </nav>
+
+                    <hr/>
+
+                    <p>Faça upload de imagens para o catálogo! </p>
+                    
+                    <div flow-init="{target: '/images/upload', 
+                                    fileParameterName: 'photo',
+                                    method: 'multipart'}"
+                         flow-files-submitted="$flow.upload()"
+                         flow-file-success="loadPage()">
+
+                      <span class="btn btn-success" flow-btn>Fazer upload de imagem</span>
+                                                    
+                      <table style="margin-top: 2%;">
+                        <tr ng-repeat="file in $flow.files">
+                            <td style="color: green">{{file.name}} - OK</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                </div>    
+            </div>
+            
+        </div>
+    </div>
+
+<script src="/js/ng-flow-standalone.min.js"></script>
+<script src="/js/imagesCtrl.js"></script>
+<% include ../includes/footer %>

@@ -12,21 +12,53 @@ module.exports = function(app) {
             var id = req.params.id;
             console.log('Get image with ID ' + id);
             
-            imageCollection.findOne({
-                _id:mongojs.ObjectId(id)}, 
+            try {
+                id = mongojs.ObjectId(id);
+                
+                imageCollection.findOne({_id: id}, 
                 function(err, data) {
-                    if(err) next(err);
+                    if(err || data == null) next(err);
                                 
                     res.sendfile(data.path);
                 });
+                
+            } catch(e) {
+                 console.log('Image with ID ' + id + ' not found!');
+                 res.end('Image with ID ' + id + ' not found!');
+            }
+        },
+        
+        allImages: function(req, res, next) {
+            
+            var page = req.params.page - 1;
+            
+            imageCollection.count(function(err, data) {
+                if(err) next(err);
+                
+                var count = JSON.stringify(data); 
+                var imagesPerPage = app.get('imagesPerPage');
+                
+                imageCollection.find({}).limit(imagesPerPage).skip(imagesPerPage*page, function(err, data) {
+                    if(err) next(err);
+                
+                    var response = {};
+                    
+                    response.pages = parseInt(count/imagesPerPage) + (count%imagesPerPage == 0 ? 0 : 1);
+                    response.data = data;
+
+                    res.end(JSON.stringify(response));                
+                });                  
+            });                    
         },
     
         uploadImage: function(req, res, next) {
-        
-            var img = req.files.photo.image;
-
-            var name = req.body.photo.name;
-            var path = join(app.get('imagesDirectory'), img.name);
+            
+            console.log(JSON.stringify(req.body));
+            
+            var img = req.files.photo;
+            var name = req.body.flowFilename;
+            
+            var path = join(app.get('imagesDirectory'), name);
 
             fs.rename(img.path, path, function(err){
                 if (err) 
@@ -39,8 +71,9 @@ module.exports = function(app) {
 
                     console.log('Photo ' + name + ' upload successfuly.');
                     
-                    req.session.messages = {success: name};
-                    res.redirect('/images');
+                    //req.session.messages = {success: name};
+                    //res.redirect('/images');
+                    res.end('Photo ' + name + ' upload successfuly.');
                 });
             });  
         },
