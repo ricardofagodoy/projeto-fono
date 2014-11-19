@@ -52,9 +52,7 @@ module.exports = function(app) {
         },
     
         uploadImage: function(req, res, next) {
-            
-            console.log(JSON.stringify(req.body));
-            
+                        
             var img = req.files.photo;
             var name = req.body.flowFilename;
             
@@ -73,6 +71,7 @@ module.exports = function(app) {
                     
                     //req.session.messages = {success: name};
                     //res.redirect('/images');
+                    
                     res.end('Photo ' + name + ' upload successfuly.');
                 });
             });  

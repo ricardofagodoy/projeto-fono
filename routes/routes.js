@@ -21,14 +21,17 @@ module.exports = function(app) {
     app.post('/images/upload', imagesModule.uploadImage);
     app.get('/images/get/:id', imagesModule.getImage);
     app.get('/images/all/:page', imagesModule.allImages);
+    app.delete('/images/:id', imagesModule.getImage);
     
     soundsModule = soundsModule(app);
     
-    /* Images routings */
+    /* Sounds routings */
     app.get('/sounds', soundsModule.soundsManagerPage);
     
-    app.post('/sounds', soundsModule.uploadSound);
+    app.post('/sounds/upload', soundsModule.uploadSound);
     app.get('/sounds/get/:id', soundsModule.getSound);
+    app.get('/sounds/all/:page', soundsModule.allSounds);
+    app.delete('/sounds/:id', soundsModule.getSound);
     
     return app.router;    
 };

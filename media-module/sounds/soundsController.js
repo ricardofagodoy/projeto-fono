@@ -4,6 +4,8 @@ var fs = require('fs'),
         join = path.join,
         mongojs = require('mongojs');
 
+    var filesChunks = {};
+
 module.exports = function(app) {
     
     return {
@@ -12,21 +14,50 @@ module.exports = function(app) {
             var id = req.params.id;
             console.log('Get sound with ID ' + id);
             
-            soundCollection.findOne({
-                _id:mongojs.ObjectId(id)}, 
+            try {
+                id = mongojs.ObjectId(id);
+                
+                soundCollection.findOne({_id: id}, 
                 function(err, data) {
-                    if(err) next(err);
+                    if(err || data == null) next(err);
                                 
                     res.sendfile(data.path);
                 });
+                
+            } catch(e) {
+                 console.log('Sound with ID ' + id + ' not found!');
+                 res.end('Sound with ID ' + id + ' not found!');
+            }
+        },
+        
+        allSounds: function(req, res, next) {
+            
+            var page = req.params.page - 1;
+            
+            soundCollection.count(function(err, data) {
+                if(err) next(err);
+                
+                var count = JSON.stringify(data); 
+                var soundsPerPage = app.get('soundsPerPage');
+                
+                soundCollection.find({}).limit(soundsPerPage).skip(soundsPerPage*page, function(err, data) {
+                    if(err) next(err);
+                
+                    var response = {};
+                    
+                    response.pages = parseInt(count/soundsPerPage) + (count%soundsPerPage == 0 ? 0 : 1);
+                    response.data = data;
+
+                    res.end(JSON.stringify(response));                
+                });                  
+            });                    
         },
     
         uploadSound: function(req, res, next) {
-        
-            var sound = req.files.sound.data;
-
-            var name = req.body.sound.name;
-            var path = join(app.get('soundsDirectory'), sound.name);
+                                
+            var sound = req.files.sound;
+            var name = req.body.flowFilename;
+            var path = join(app.get('soundsDirectory'), name);
 
             fs.rename(sound.path, path, function(err){
                 if (err) 
@@ -39,8 +70,7 @@ module.exports = function(app) {
 
                     console.log('Sound ' + name + ' upload successfuly.');
                     
-                    req.session.messages = {success: name};
-                    res.redirect('/sounds');
+                    res.end('Sound ' + name + ' upload successfuly.');
                 });
             });  
         },
