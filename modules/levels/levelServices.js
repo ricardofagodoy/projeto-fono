@@ -18,7 +18,7 @@ module.exports = function(app) {
         
         getAllLevels: function(req, res, next) {
                 
-            dao.findAll(dao.levelCollection, function(err, data) {
+            dao.findAllOrdered(dao.levelCollection, {order: 1}, function(err, data) {
                 if(err || data === null) next(err);
 
                 res.end(JSON.stringify(data));                

@@ -2,31 +2,64 @@ app = angular.module('levelsManager', []);
 
 app.controller('levelsCtrl', ['$scope', '$http', function($scope, $http) {
     
-    $scope.images = [];
-    $scope.page = 1;
-    $scope.totalPages = 1;
+    var levels = [];
+    var currentLevel = 2;
     
-    ($scope.loadPage = function() {
-        
-        $http.get('http://' + location.host + '/images/all/' + $scope.page).
+    var images = [];
+    var audio = null;
+    
+    //alert($(window).width() + ' ' + $(window).height());
+    
+    /* Should be called only once */
+    (function() {
+    
+        $http.get('http://' + location.host + '/level/all').
             success(function(data) {
-                $scope.images = data.data;
-                $scope.totalPages = data.pages;
-            });      
+                levels = data;
+            
+                loadLevel();
+            });    
     })();
     
-    $scope.prevPage = function() {
-        if($scope.page > 1) {
-            $scope.page--;
-            $scope.loadPage();
-        }          
+    var loadLevel = function() {
+    
+        if(audio === null) {
+            audio = new Audio();
+            
+            audio.preload = "auto";
+            audio.volume = 1;
+            
+            audio.addEventListener('ended', function() {
+                $scope.$apply();
+            });
+        }
+        
+        audio.src = 'http://' + location.host + '/sounds/get/' + getSound();
+        audio.load();   
     };
     
-    $scope.nextPage = function() {
-        if($scope.page < $scope.totalPages) {
-            $scope.page++;
-            $scope.loadPage();
-        }          
+    $scope.playAudio = function() {
+    
+        if($scope.isPlaying())
+            audio.pause();
+        else
+            audio.play();     
+    };
+    
+    $scope.getImages = function() {
+        return levels[currentLevel-1].images;
+    };
+    
+    var getSound = function() {
+        return levels[currentLevel-1].sound;
+    };
+    
+    $scope.getLevel = function() {
+        return currentLevel;
+    }
+    
+    $scope.isPlaying = function() {
+        return audio != null && audio.duration > 0 && !audio.paused;
     };
     
 }]);

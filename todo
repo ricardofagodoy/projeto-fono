@@ -1,6 +1,7 @@
 - error handling
-- refactor and organize angular controllers and services
+- refactor and organize angular controllers and (use) services
 - upload files using chunks
 - stream audio / preload
 - delete images and sounds
 - security / authentication
+- resize images before send to user (important)

@@ -33,6 +33,7 @@ app.use(express.session());
 
 app.use("/css", express.static(__dirname + '/views/css'));
 app.use("/js", express.static(__dirname + '/views/js'));
+app.use("/fonts", express.static(__dirname + '/views/fonts'));
 
 /* Set Routes to app */
 app.use(routes(app));

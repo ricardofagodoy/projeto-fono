@@ -27,6 +27,10 @@ module.exports = {
         db.find({}, callback);
     },
     
+    findAllOrdered: function(db, orderBy, callback) {
+        db.find({}).sort(orderBy, callback);
+    },
+    
     findByPage: function(db, page, limit, search, callback) {
         db.find(search).limit(limit).skip(limit*page, callback);        
     },
