@@ -1,0 +1,6 @@
+- error handling
+- refactor and organize angular controllers and services
+- upload files using chunks
+- stream audio / preload
+- delete images and sounds
+- security / authentication

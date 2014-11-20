@@ -1,5 +1,6 @@
-var soundsModule = require('../media-module/sounds/soundsController.js'),
-    imagesModule = require('../media-module/images/imagesController.js');
+var soundsModule = require('../modules/sounds/soundServices.js'),
+    imagesModule = require('../modules/images/imageServices.js'),
+    levelsModule = require('../modules/levels/levelServices.js');
 
 module.exports = function(app) {
   
@@ -32,6 +33,14 @@ module.exports = function(app) {
     app.get('/sounds/get/:id', soundsModule.getSound);
     app.get('/sounds/all/:page', soundsModule.allSounds);
     app.delete('/sounds/:id', soundsModule.getSound);
+    
+    levelsModule = levelsModule(app);
+    
+    /* Levels routings */
+    app.get('/level', levelsModule.startPage);
+    
+    app.get('/level/get/:id', levelsModule.getLevel);
+    app.get('/level/all', levelsModule.getAllLevels);
     
     return app.router;    
 };

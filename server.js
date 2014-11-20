@@ -18,18 +18,18 @@ app.set('soundsDirectory', appProperties.soundsDirectory);
 app.set('views', __dirname + '/views/templates');
 app.set('view engine', 'ejs');
 
-app.use(express.logger('dev'));
+app.use(express.logger('default'));
 app.use(express.limit(appProperties.maxFileSize));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('secretSeed'));
 app.use(express.session());
 
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
     res.locals(req.session.messages);
     req.session.messages = {};
     next();
-});
+}); */
 
 app.use("/css", express.static(__dirname + '/views/css'));
 app.use("/js", express.static(__dirname + '/views/js'));
