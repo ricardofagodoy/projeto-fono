@@ -13,7 +13,8 @@ module.exports = function(app) {
                 
             dao.findById(dao.soundCollection, id, function(err, data) {
                 if(err || data === null) next(err);
-                                
+                              
+                //res.header('Content-Type', 'audio/mpeg');
                 res.sendfile(data.path);
             });
         },

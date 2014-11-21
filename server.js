@@ -18,7 +18,7 @@ app.set('soundsDirectory', appProperties.soundsDirectory);
 app.set('views', __dirname + '/views/templates');
 app.set('view engine', 'ejs');
 
-app.use(express.logger('default'));
+app.use(express.logger('tiny'));
 app.use(express.limit(appProperties.maxFileSize));
 app.use(express.bodyParser());
 app.use(express.methodOverride());

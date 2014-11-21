@@ -3,6 +3,10 @@ a {
     
 }
 
+.selected-image {
+    border: 2px solid red;
+}
+
 a:hover {
     text-decoration: none;
     color: #000000;
