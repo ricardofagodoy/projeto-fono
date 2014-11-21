@@ -2,16 +2,24 @@
 
     <div ng-app="levelsManager" ng-controller="levelsCtrl" class="container-fluid myContent">
         
-      <!--  <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
-          <div class="panel-body">
-            Panel content
-          </div>
-        </div>        -->
-        
         <div class="col-xs-12 col-sm-12 col-lg-10 col-lg-offset-1">
+            
+            <div class="modal fade" id="msg" tabindex="-1" role="dialog" aria-labelledby="msg" aria-hidden="true">
+              <div class="modal-dialog modal-sm" style="text-align: center">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">{{msg.title}}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <h3>{{msg.text}}</h3>
+                  </div>
+                  <div class="modal-footer">
+                    <span style="width: 100%" type="button" class="btn btn-primary" data-dismiss="modal">OK</span>
+                  </div>
+                </div>
+              </div>
+            </div>
             
             <div class="panel panel-primary">
 

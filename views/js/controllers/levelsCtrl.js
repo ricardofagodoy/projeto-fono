@@ -3,14 +3,20 @@ app = angular.module('levelsManager', []);
 app.controller('levelsCtrl', ['$scope', '$http', function($scope, $http) {
     
     /* VARIABLES */
+    
+    /* Level */
     var allLevels = [];
     var currentLevel = null;
+    var currentLevelNumber = 1;
     
-    var currentLevelNumber = 1, 
-        selectedIndex = null;
+    /* Image selection */
+    var selectedIndex = null;
     
+    /* Audio */
     var audio = null, readyToPlay = true;
     
+    /* Message modal */
+    $scope.msg = {title: 'Title', text: 'Text'};    
     
     /***** Should be called only once *****/
     (function() {
@@ -98,17 +104,19 @@ app.controller('levelsCtrl', ['$scope', '$http', function($scope, $http) {
                 
         if(currentLevel.correct === currentLevel.images[selectedIndex]) {
             
-            alert('Correto!');
+            $scope.msg = {title: 'Parabéns', text: 'Você acertou!'};
             
             if(currentLevelNumber === allLevels.length)
-                alert('Fim dos níveis :)');
+                $scope.msg = {title: 'Parabéns!!', text: 'Fim de Jogo :)'};
             else {
                 currentLevelNumber++;
                 loadLevel(); 
             }
         }
         else
-            alert('Errado!');
+            $scope.msg = {title: 'Que pena', text: 'Você errou.'};
+        
+        $('#msg').modal('show');
     };
     
     //alert($(window).width() + ' ' + $(window).height());
